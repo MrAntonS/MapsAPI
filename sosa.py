@@ -2,28 +2,13 @@ import pygame
 import requests
 import sys
 import os
+from map import get_map
  
 response = None
 try:
-    def maps(x, y, z):
-        map_request = "http://static-maps.yandex.ru/1.x/?ll={},{}&z={}&spn=0.002,0.002&l=map".format(x, y, z)
-        return map_request
     x = input().split()
-    response = requests.get(maps(x[0], x[1], x[2]))
-        
-    if not response:
-        print("Ошибка выполнения запроса:")
-        print(geocoder_request)
-        print("Http статус:", response.status_code, "(", response.reason, ")")
-        sys.exit(1)
-except:
-    print("Запрос не удалось выполнить. Проверьте наличие сети Интернет.")
-    sys.exit(1)
-
-# Запишем полученное изображение в файл.
-map_file = "map.png"
-try:
-    with open(map_file, "wb") as file:
+    map_file = get_map(x[0],x[1],x[2],x[3])
+    with open(x[3], "wb") as file:
         file.write(response.content)
 except IOError as ex:
     print("Ошибка записи временного файла:", ex)
@@ -33,7 +18,8 @@ except IOError as ex:
 pygame.init()
 screen = pygame.display.set_mode((600, 450))
 # Рисуем картинку, загружаемую из только что созданного файла.
-screen.blit(pygame.image.load(map_file), (0, 0))
+
+screen.blit(pygame.image.load(x[3]), (0, 0))
 # Переключаем экран и ждем закрытия окна.
 pygame.display.flip()
 while pygame.event.wait().type != pygame.QUIT:
@@ -41,4 +27,4 @@ while pygame.event.wait().type != pygame.QUIT:
 pygame.quit()
  
 # Удаляем за собой файл с изображением.
-os.remove(map_file)
+os.remove(x[3])
