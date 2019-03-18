@@ -2,7 +2,7 @@ import requests
 
 
 geocoder_api_server = "http://static-maps.yandex.ru/1.x/"
-def get_map(x, y, zoom, filename, map_type="skl"):
+def get_map(x, y, zoom, filename, map_type="sat"):
     params = {"l": map_type,
               "z": str(zoom),
               "ll": ",".join([str(x),str(y)])}
@@ -20,7 +20,7 @@ def get_map(x, y, zoom, filename, map_type="skl"):
 
 
 if __name__ == "__main__":
-    x, y = '37.606281', '55.822878'
-    zoom = 15
+    x, y = '37', '55'
+    zoom = 10
     filename = "map.png"
-    print(get_map(x, y, zoom, filename, "sat") )
+    print(get_map(x, y, zoom, filename, "map") )
