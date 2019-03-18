@@ -5,9 +5,12 @@ import os
  
 response = None
 try:
-    map_request = "http://static-maps.yandex.ru/1.x/?ll=47.530887,65.703118&spn=0.002,0.002&l=map"
-    response = requests.get(map_request)
- 
+    def maps(x, y, z):
+        map_request = "http://static-maps.yandex.ru/1.x/?ll={},{}&z={}&spn=0.002,0.002&l=map".format(x, y, z)
+        return map_request
+    x = input().split()
+    response = requests.get(maps(x[0], x[1], x[2]))
+        
     if not response:
         print("Ошибка выполнения запроса:")
         print(geocoder_request)
@@ -16,7 +19,7 @@ try:
 except:
     print("Запрос не удалось выполнить. Проверьте наличие сети Интернет.")
     sys.exit(1)
- 
+
 # Запишем полученное изображение в файл.
 map_file = "map.png"
 try:
