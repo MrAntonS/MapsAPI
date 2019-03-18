@@ -8,8 +8,6 @@ response = None
 try:
     x = input().split()
     map_file = get_map(x[0],x[1],x[2],x[3])
-    with open(x[3], "wb") as file:
-        file.write(response.content)
 except IOError as ex:
     print("Ошибка записи временного файла:", ex)
     sys.exit(2)
@@ -22,7 +20,24 @@ screen = pygame.display.set_mode((600, 450))
 screen.blit(pygame.image.load(x[3]), (0, 0))
 # Переключаем экран и ждем закрытия окна.
 pygame.display.flip()
-while pygame.event.wait().type != pygame.QUIT:
+running = True
+x[2] = int(x[2])
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        elif event.type == pygame.KEYUP:
+            print(x[2])
+            if event.key == 280: 
+                if x[2] != 20:
+                    x[2] += 1
+            if event.key == 281:
+                if x[2] != 0:
+                    x[2] -= 1
+    x[2] = abs(x[2])
+    map_file = get_map(x[0],x[1],x[2],x[3])
+    screen.blit(pygame.image.load(x[3]), (0, 0))
+    pygame.display.flip()
     pass
 pygame.quit()
  
