@@ -1,4 +1,4 @@
-import pygame
+﻿import pygame
 import requests
 import sys
 import os
@@ -6,7 +6,7 @@ from map import get_map
  
 response = None
 try:
-    x = input().split()
+    x = [30, 50, 8, "map.png"]#input().split()
     map_file = get_map(x[0],x[1],x[2],x[3])
 except IOError as ex:
     print("Ошибка записи временного файла:", ex)
@@ -14,7 +14,7 @@ except IOError as ex:
  
 # Инициализируем pygame
 pygame.init()
-screen = pygame.display.set_mode((600, 450))
+screen = pygame.display.set_mode((450, 450))
 # Рисуем картинку, загружаемую из только что созданного файла.
 
 screen.blit(pygame.image.load(x[3]), (0, 0))
